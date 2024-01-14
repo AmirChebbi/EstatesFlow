@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.Vector;
 
-@Service
+
 public interface CompanyService {
     public ResponseEntity<Object> getById(@PathVariable Long id);
 
