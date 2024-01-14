@@ -5,7 +5,6 @@ import com.example.EstatesFlow.Services.Project.ProjectService;
 import java.util.List;
 
 public record CompanyDTO (
-        long id,
         String coName,
         String imageURL,
         String coDescription,

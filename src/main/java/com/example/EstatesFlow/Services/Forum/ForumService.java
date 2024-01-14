@@ -1,64 +1,18 @@
 package com.example.EstatesFlow.Services.Forum;
 
 import com.example.EstatesFlow.Entities.Forum.Forum;
-import com.example.EstatesFlow.Repositories.Forum.ForumRepository;
-import com.example.EstatesFlow.DTO.Forum.ForumDTO;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.ResponseEntity;
 
-import java.util.List;
-import java.util.Vector;
+public interface ForumService {
+    public ResponseEntity<Object> getById( long id);
 
-@Service
-public class ForumService {
+    public ResponseEntity<Object> getAll();
 
-    private final ForumRepository forumRepository;
+    public ResponseEntity<Object> submitForum( Forum forum);
 
-    private final JavaMailSender javaMailSender;
 
-    public ForumService(ForumRepository forumRepository, JavaMailSender javaMailSender) {
-        this.forumRepository = forumRepository;
-        this.javaMailSender = javaMailSender;
-    }
+    public ResponseEntity<Object> deleteForum( long id);
 
-    public ForumDTO getById(@PathVariable long id){
-        return new ForumDTO(forumRepository.getById(id));
-    }
-
-    public Vector<ForumDTO> getAll(){
-        List<Forum> forums= forumRepository.findAll();
-        Vector<ForumDTO> forumDTOS = new Vector<>();
-        for (Forum forum : forums){
-            forumDTOS.add(new ForumDTO(forum));
-        }
-        return forumDTOS;
-    }
-
-    public Forum submitForum(@RequestBody Forum forum){
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setTo(forum.getEmail());
-        simpleMailMessage.setSubject("Conformation de l'envoi de votre formulaire");
-        simpleMailMessage.setText("");
-        javaMailSender.send(simpleMailMessage);
-        SimpleMailMessage simpleMailMessageAdmin = new SimpleMailMessage();
-        simpleMailMessageAdmin.setTo("");
-        simpleMailMessageAdmin.setSubject("You have a new potential client");
-        simpleMailMessageAdmin.setText("Bro you have a new potential Client named : " + forum.getFirstName() + forum.getLastName() + ", their email is : " + forum.getEmail() + ", You better contact them, if you wanna make money of course." +
-                "all the other related info is in the forum number " + forum.getId());
-        return forumRepository.save(forum);
-    }
-
-    public void deleteForum(@PathVariable long id){
-        forumRepository.deleteById(id);
-    }
-
-    public Forum updateForum(@RequestBody Forum forum, @PathVariable long id){
-        forum.setId(id);
-        return forumRepository.save(forum);
-    }
-
+    public ResponseEntity<Object> updateForum( Forum forum, long id);
 
 }

@@ -5,8 +5,6 @@ import java.util.List;
 
 public record ProjectDTO (
 
-    long id,
-
     String projName,
     String projDescription,
     String address,
