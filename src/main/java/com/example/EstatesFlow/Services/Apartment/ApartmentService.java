@@ -1,5 +1,6 @@
 package com.example.EstatesFlow.Services.Apartment;
 
+import com.example.EstatesFlow.DTO.Apartment.ApartmentDTO;
 import com.example.EstatesFlow.Entities.Apartment.Apartment;
 import com.example.EstatesFlow.Repositories.Apartment.ApartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +16,17 @@ import java.util.Objects;
 public interface ApartmentService {
 
 
-    public ResponseEntity<Object> getById(@PathVariable Long id);
+    public ResponseEntity<Object> getById(long id);
 
-    public ResponseEntity<Object> getAll();
+    public ResponseEntity<Object> getAll(long pageNumber);
 
-    public ResponseEntity<Object> addApartment(@RequestBody Apartment apartment);
+    public ResponseEntity<Object> getAllApartmentsForSale(long id ,long pageNumber);
 
-    public ResponseEntity<Object> updateApartment(@PathVariable long id, @RequestBody Apartment apartment);
+    public ResponseEntity<Object> addApartment(ApartmentDTO apartmentDTO);
 
-    public ResponseEntity<Object> deleteById(@PathVariable long id);
+    public ResponseEntity<Object> updateApartment( long id, ApartmentDTO apartmentDTO);
+
+    public ResponseEntity<Object> deleteById(long id);
 
 /*
 */

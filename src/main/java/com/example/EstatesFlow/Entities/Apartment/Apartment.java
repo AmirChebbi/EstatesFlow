@@ -21,5 +21,12 @@ public class Apartment {
 
     private String apartmentDescription;
 
-    private String state = "For Sale";
+    private boolean sold;
+
+    public Apartment(int apartmentNumber, int floorNumber, String apartmentDescription) {
+        this.apartmentNumber = apartmentNumber;
+        this.floorNumber = floorNumber;
+        this.apartmentDescription = apartmentDescription;
+        this.sold = false;
+    }
 }

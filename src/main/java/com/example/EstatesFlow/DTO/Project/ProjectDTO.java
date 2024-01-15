@@ -4,7 +4,6 @@ import com.example.EstatesFlow.Entities.Apartment.Apartment;
 import java.util.List;
 
 public record ProjectDTO (
-
     String projName,
     String projDescription,
     String address,

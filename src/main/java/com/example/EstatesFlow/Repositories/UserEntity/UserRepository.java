@@ -1,6 +1,6 @@
 package com.example.EstatesFlow.Repositories.UserEntity;
 
-import com.example.EstatesFlow.Services.UserEntity.UserEntity;
+import com.example.EstatesFlow.Entities.UserEntity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

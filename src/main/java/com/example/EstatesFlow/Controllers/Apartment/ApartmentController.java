@@ -1,12 +1,10 @@
 package com.example.EstatesFlow.Controllers.Apartment;
 
-import com.example.EstatesFlow.Entities.Apartment.Apartment;
+import com.example.EstatesFlow.DTO.Apartment.ApartmentDTO;
 import com.example.EstatesFlow.Services.Apartment.ApartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/apartment")
@@ -19,23 +17,22 @@ public class ApartmentController {
     }
 
     @GetMapping("/getById/{id}")
-    public ResponseEntity<Object> getById(@PathVariable Long id){
+    public ResponseEntity<Object> getById(@PathVariable long id){
         return apartmentService.getById(id);
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<Object> getAll(){
-        return apartmentService.getAll();
+    public ResponseEntity<Object> getAll(int pageNumber){
+        return apartmentService.getAll(pageNumber);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> addApartment(@RequestBody Apartment apartment){
+    public ResponseEntity<Object> addApartment(@RequestBody ApartmentDTO apartment){
         return apartmentService.addApartment(apartment);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Object> updateApartment(@PathVariable long id, @RequestBody Apartment apartment){
-        apartment.setId(id);
+    public ResponseEntity<Object> updateApartment(@PathVariable long id, @RequestBody ApartmentDTO apartment){
         return apartmentService.updateApartment(id ,apartment);
     }
 

@@ -1,4 +1,4 @@
-package com.example.EstatesFlow.Services.UserEntity;
+package com.example.EstatesFlow.Entities.UserEntity;
 
 import com.example.EstatesFlow.Entities.Role.Role;
 import jakarta.persistence.*;
