@@ -31,6 +31,11 @@ public class ApartmentController {
         return apartmentService.addApartment(apartment);
     }
 
+    @GetMapping("/getAllForSale")
+    public ResponseEntity<Object> getAllForSale(long projectId, long pageNumber){
+        return apartmentService.getAllApartmentsForSale(projectId, pageNumber);
+    }
+
     @PutMapping("/update/{id}")
     public ResponseEntity<Object> updateApartment(@PathVariable long id, @RequestBody ApartmentDTO apartment){
         return apartmentService.updateApartment(id ,apartment);

@@ -1,6 +1,6 @@
 package com.example.EstatesFlow.DTO.Project;
 
-import com.example.EstatesFlow.Entities.Apartment.Apartment;
+import com.example.EstatesFlow.DTO.Apartment.ApartmentDTO;
 import java.util.List;
 
 public record ProjectDTO (
@@ -8,5 +8,5 @@ public record ProjectDTO (
     String projDescription,
     String address,
     String projImageURL,
-    List<Apartment> apartments
+    List<ApartmentDTO> apartments
 ){}
