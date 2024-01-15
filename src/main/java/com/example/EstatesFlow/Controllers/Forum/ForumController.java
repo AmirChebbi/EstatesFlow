@@ -26,8 +26,8 @@ public class ForumController {
 
 
     @GetMapping("/getAll")
-    public ResponseEntity<Object> getAll(){
-        return forumService.getAll();
+    public ResponseEntity<Object> getAll(long pageNumber){
+        return forumService.getAll(pageNumber);
     }
 
     @PostMapping("/add")

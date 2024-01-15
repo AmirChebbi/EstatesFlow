@@ -11,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-
 import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Objects;
@@ -57,7 +56,7 @@ public class ApartmentServiceImpl implements ApartmentService{
 
     @Override
     public ResponseEntity<Object> addApartment(ApartmentDTO apartmentDTO) {
-        if (apartmentRepository.findById(apartmentDTO.id()).isEmpty()){
+        if (apartmentRepository.findByDTO(apartmentDTO.apartmentNumber(),apartmentDTO.floorNumber(),apartmentDTO.apartmentDescription()).isEmpty()){
             apartmentRepository.save(
                     new Apartment(
                             apartmentDTO.apartmentNumber(),
@@ -94,7 +93,6 @@ public class ApartmentServiceImpl implements ApartmentService{
             throw new ResourceNotFoundException("This Apartment already don't exist");
         }
     }
-
 
     public static List<Apartment> filterSoldApartments(List<Apartment> apartments){
         for (Apartment apartment : apartments){

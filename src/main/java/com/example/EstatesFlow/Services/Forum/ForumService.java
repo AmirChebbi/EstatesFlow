@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 public interface ForumService {
     public ResponseEntity<Object> getById( long id);
 
-    public ResponseEntity<Object> getAll();
+    public ResponseEntity<Object> getAll(long pageNumber);
 
     public ResponseEntity<Object> submitForum( Forum forum);
 

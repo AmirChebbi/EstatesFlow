@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -26,4 +27,11 @@ public class Company {
 
     @OneToMany
     private List<Project> projects ;
+
+    public Company(String coName, String imageURL, String coDescription) {
+        this.coName = coName;
+        this.imageURL = imageURL;
+        this.coDescription = coDescription;
+        this.projects = new ArrayList<>();
+    }
 }

@@ -6,17 +6,15 @@ import com.example.EstatesFlow.Exceptions.ResourceNotFoundException;
 import com.example.EstatesFlow.Repositories.Forum.ForumRepository;
 import com.example.EstatesFlow.DTO.Forum.ForumDTO;
 import com.example.EstatesFlow.Utility.ResponseHandler;
-import org.hibernate.query.hql.HqlLogging_$logger;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
+import java.awt.print.Pageable;
 import java.util.List;
-import java.util.Vector;
 
 @Service
 public class ForumServiceImpl implements ForumService{
@@ -38,10 +36,14 @@ public class ForumServiceImpl implements ForumService{
         return ResponseHandler.generateResponse(forumDTOMapper.apply(forum), HttpStatus.OK);
     }
 
-    public ResponseEntity<Object> getAll(){
-        List<Forum> forums= forumRepository.findAll();
+    public ResponseEntity<Object> getAll(long pageNumber){
+        final Pageable pageable = (Pageable) PageRequest.of((int) pageNumber, 10);
+        List<Forum> forums= forumRepository.findAllPaged(pageable);
+        if (forums.isEmpty() && pageNumber >1 ){
+            return getAll(1);
+        }
         List<ForumDTO> forumDTOS =forums.stream().map(forumDTOMapper).toList();
-        return ResponseHandler.generateResponse(forumDTOS, HttpStatus.OK);
+        return ResponseHandler.generateResponse(forumDTOS, HttpStatus.OK, forumDTOS.size(), forumRepository.getCountPaged(pageable));
     }
 
     public ResponseEntity<Object> submitForum(Forum forum){
