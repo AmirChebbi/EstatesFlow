@@ -2,6 +2,7 @@ package com.example.EstatesFlow.Services.Forum;
 
 import com.example.EstatesFlow.DTO.Apartment.ApartmentDTO;
 import com.example.EstatesFlow.DTO.Company.CompanyDTO;
+import com.example.EstatesFlow.DTO.Forum.ForumDTO;
 import com.example.EstatesFlow.DTO.Forum.ForumDTOMapper;
 import com.example.EstatesFlow.DTO.Project.ProjectDTO;
 import com.example.EstatesFlow.Entities.Apartment.Apartment;
@@ -14,7 +15,6 @@ import com.example.EstatesFlow.Exceptions.ResourceNotFoundException;
 import com.example.EstatesFlow.Repositories.Apartment.ApartmentRepository;
 import com.example.EstatesFlow.Repositories.Company.CompanyRepository;
 import com.example.EstatesFlow.Repositories.Forum.ForumRepository;
-import com.example.EstatesFlow.DTO.Forum.ForumDTO;
 import com.example.EstatesFlow.Repositories.Project.ProjectRepository;
 import com.example.EstatesFlow.Repositories.UserEntity.UserRepository;
 import com.example.EstatesFlow.Utility.ResponseHandler;

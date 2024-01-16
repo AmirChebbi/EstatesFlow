@@ -3,7 +3,6 @@ package com.example.EstatesFlow.Services.Apartment;
 import com.example.EstatesFlow.DTO.Apartment.ApartmentDTO;
 import com.example.EstatesFlow.DTO.Apartment.ApartmentDTOMapper;
 import com.example.EstatesFlow.Entities.Apartment.Apartment;
-import com.example.EstatesFlow.Entities.Company.Company;
 import com.example.EstatesFlow.Entities.Project.Project;
 import com.example.EstatesFlow.Exceptions.ResourceNotFoundException;
 import com.example.EstatesFlow.Exceptions.UnauthorizedActionException;
@@ -21,7 +20,6 @@ import java.util.List;
 public class ApartmentServiceImpl implements ApartmentService{
 
     private final ApartmentRepository apartmentRepository;
-
     private final ApartmentDTOMapper apartmentDTOMapper;
     private final ProjectRepository projectRepository;
 

@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -45,7 +46,13 @@ public class UserEntity implements UserDetails {
     @Column(nullable = false)
     private String phoneNumber;
 
-    @ManyToOne
+    @Column(nullable = false)
+    private Date creationDate;
+
+    @Column( name = "is_enabled", nullable = false)
+    private boolean isEnabled = false;
+
+    @ManyToOne(cascade = CascadeType.ALL)
     private Role role;
 
     @Override
