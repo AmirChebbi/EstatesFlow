@@ -19,7 +19,7 @@ public class Apartment {
 
     private int floorNumber;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String apartmentDescription;
 
     private boolean sold;

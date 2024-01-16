@@ -22,10 +22,10 @@ public interface ApartmentService {
 
     public ResponseEntity<Object> getAllApartmentsForSale(long id ,long pageNumber);
 
-    public ResponseEntity<Object> addApartment(ApartmentDTO apartmentDTO);
+    public ResponseEntity<Object> addApartment(ApartmentDTO apartmentDTO, long projectId);
 
     public ResponseEntity<Object> updateApartment( long id, ApartmentDTO apartmentDTO);
 
-    public ResponseEntity<Object> deleteById(long id);
+    public ResponseEntity<Object> deleteById(long id, long projectId);
 
 }

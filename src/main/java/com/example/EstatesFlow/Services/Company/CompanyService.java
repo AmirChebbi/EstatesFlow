@@ -21,7 +21,7 @@ public interface CompanyService {
 
     public ResponseEntity<Object> addCompany(CompanyDTO companyDTO);
 
-    public ResponseEntity<Object> updateCompany(long id, CompanyDTO companyDTO);
+    public ResponseEntity<Object> updateCompany(CompanyDTO companyDTO);
     public ResponseEntity<Object> deleteById(long id);
 
 

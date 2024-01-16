@@ -3,9 +3,12 @@ package com.example.EstatesFlow.Services.Apartment;
 import com.example.EstatesFlow.DTO.Apartment.ApartmentDTO;
 import com.example.EstatesFlow.DTO.Apartment.ApartmentDTOMapper;
 import com.example.EstatesFlow.Entities.Apartment.Apartment;
+import com.example.EstatesFlow.Entities.Company.Company;
+import com.example.EstatesFlow.Entities.Project.Project;
 import com.example.EstatesFlow.Exceptions.ResourceNotFoundException;
 import com.example.EstatesFlow.Exceptions.UnauthorizedActionException;
 import com.example.EstatesFlow.Repositories.Apartment.ApartmentRepository;
+import com.example.EstatesFlow.Repositories.Project.ProjectRepository;
 import com.example.EstatesFlow.Utility.ResponseHandler;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,10 +23,12 @@ public class ApartmentServiceImpl implements ApartmentService{
     private final ApartmentRepository apartmentRepository;
 
     private final ApartmentDTOMapper apartmentDTOMapper;
+    private final ProjectRepository projectRepository;
 
-    public ApartmentServiceImpl(ApartmentRepository apartmentRepository, ApartmentDTOMapper apartmentDTOMapper) {
+    public ApartmentServiceImpl(ApartmentRepository apartmentRepository, ApartmentDTOMapper apartmentDTOMapper, ProjectRepository projectRepository) {
         this.apartmentRepository = apartmentRepository;
         this.apartmentDTOMapper = apartmentDTOMapper;
+        this.projectRepository = projectRepository;
     }
 
     @Override
@@ -55,15 +60,16 @@ public class ApartmentServiceImpl implements ApartmentService{
     }
 
     @Override
-    public ResponseEntity<Object> addApartment(ApartmentDTO apartmentDTO) {
+    public ResponseEntity<Object> addApartment(ApartmentDTO apartmentDTO, long projectId) {
         if (apartmentRepository.findByDTO(apartmentDTO.apartmentDescription(), apartmentDTO.apartmentNumber(),apartmentDTO.floorNumber()).isEmpty()){
-            apartmentRepository.save(
+            Apartment apartment = apartmentRepository.save(
                     new Apartment(
                             apartmentDTO.apartmentNumber(),
                             apartmentDTO.floorNumber(),
                             apartmentDTO.apartmentDescription()
                     )
             );
+            addApartmentTOProject(apartment,projectId);
             String successMessage = String.format("Apartment saved successfully !!");
             return ResponseHandler.generateResponse(successMessage, HttpStatus.OK);
         } else {
@@ -84,23 +90,34 @@ public class ApartmentServiceImpl implements ApartmentService{
     }
 
     @Override
-    public ResponseEntity<Object> deleteById(long id) {
-        if (apartmentRepository.existsById(id)) {
-            apartmentRepository.deleteById(id);
-            String successMessage = String.format("Apartment deleted successfully !!");
-            return ResponseHandler.generateResponse(successMessage, HttpStatus.OK);
-        } else {
-            throw new ResourceNotFoundException("This Apartment already don't exist");
-        }
+    public ResponseEntity<Object> deleteById(long id, long projectId) {
+        Apartment apartment = apartmentRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Apartment doesn't exist !!"));
+        deleteApartmentFromProject(apartment,projectId);
+        apartmentRepository.deleteById(id);
+        String successMessage = String.format("Apartment deleted successfully !!");
+        return ResponseHandler.generateResponse(successMessage, HttpStatus.OK);
     }
 
-    /*public static List<Apartment> filterSoldApartments(List<Apartment> apartments){
-        for (Apartment apartment : apartments){
-            if (Objects.equals( apartment.isSold(),true)){
-                apartments.remove(apartment);
-            }
+    private void addApartmentTOProject(Apartment apartment, long companyId){
+        Project project = projectRepository.findById(companyId).orElseThrow(()-> new ResourceNotFoundException("Project doesn't exist !!"));
+        List<Apartment> apartments = project.getApartments();
+        if (!apartments.contains(apartment)) {
+            apartments.add(apartment);
+            project.setApartments(apartments);
+            projectRepository.save(project);
+        } else {
+            throw new UnauthorizedActionException("Project already has this project !!");
         }
-        return apartments;
-    }*/
-
+    }
+    private void deleteApartmentFromProject(Apartment apartment, long companyId){
+        Project project = projectRepository.findById(companyId).orElseThrow(()-> new ResourceNotFoundException("Project doesn't exist !!"));
+        List<Apartment> apartments = project.getApartments();
+        if (apartments.contains(apartment)) {
+            apartments.remove(apartment);
+            project.setApartments(apartments);
+            projectRepository.save(project);
+        } else {
+            throw new UnauthorizedActionException("Project doesn't have this project !!");
+        }
+    }
 }

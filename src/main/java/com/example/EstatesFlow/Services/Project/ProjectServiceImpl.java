@@ -2,9 +2,11 @@ package com.example.EstatesFlow.Services.Project;
 
 import com.example.EstatesFlow.DTO.Project.ProjectDTO;
 import com.example.EstatesFlow.DTO.Project.ProjectDTOMapper;
+import com.example.EstatesFlow.Entities.Company.Company;
 import com.example.EstatesFlow.Entities.Project.Project;
 import com.example.EstatesFlow.Exceptions.ResourceNotFoundException;
 import com.example.EstatesFlow.Exceptions.UnauthorizedActionException;
+import com.example.EstatesFlow.Repositories.Company.CompanyRepository;
 import com.example.EstatesFlow.Repositories.Project.ProjectRepository;
 import com.example.EstatesFlow.Utility.ResponseHandler;
 import org.springframework.data.domain.PageRequest;
@@ -13,16 +15,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ProjectServiceImpl implements ProjectService{
 
+    private final CompanyRepository companyRepository;
     private final ProjectRepository projectRepository;
     private final ProjectDTOMapper projectDTOMapper;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository, ProjectDTOMapper projectDTOMapper) {
+    public ProjectServiceImpl(CompanyRepository companyRepository, ProjectRepository projectRepository, ProjectDTOMapper projectDTOMapper) {
+        this.companyRepository = companyRepository;
         this.projectRepository = projectRepository;
         this.projectDTOMapper = projectDTOMapper;
     }
@@ -45,14 +48,15 @@ public class ProjectServiceImpl implements ProjectService{
 
 
     @Override
-    public ResponseEntity<Object> addProject(ProjectDTO projectDTO) {
+    public ResponseEntity<Object> addProject(ProjectDTO projectDTO,long companyId) {
         if (projectRepository.findByDTO(projectDTO.projName(),projectDTO.address(),projectDTO.projDescription()).isEmpty()){
-            projectRepository.save(new Project(
+            Project project = projectRepository.save(new Project(
                     projectDTO.projName(),
                     projectDTO.projDescription(),
                     projectDTO.address(),
                     projectDTO.projImageURL()
             ));
+            addProjectToCompany(project,companyId);
             String successMessage = String.format("Project added successfully !!");
             return ResponseHandler.generateResponse(successMessage, HttpStatus.OK);
         } else {
@@ -72,21 +76,35 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public ResponseEntity<Object> deleteById(long id) {
-        if (!projectRepository.findById(id).isEmpty()) {
-            projectRepository.deleteById(id);
-            String successMessage = String.format("Project deleted successfully");
-            return ResponseHandler.generateResponse(successMessage, HttpStatus.OK);
-        } else {
-            throw new UnauthorizedActionException("Project doesn't exist !!");
-        }
+    public ResponseEntity<Object> deleteById(long id, long companyId) {
+        Project project = projectRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Project doesn't exist !!"));
+        deleteProjectFromCompany(project, companyId);
+        projectRepository.deleteById(id);
+        String successMessage = String.format("Project deleted successfully");
+        return ResponseHandler.generateResponse(successMessage, HttpStatus.OK);
+
     }
 
-    public static List<String> mapProjectsToNames(List<ProjectDTO> projects){
-        List<String> names =new ArrayList<>();
-        for (ProjectDTO project : projects){
-            names.add(project.projName());
+    private void addProjectToCompany(Project project, long companyId){
+        Company company = companyRepository.findById(companyId).orElseThrow(()-> new ResourceNotFoundException("Company doesn't exist !!"));
+        List<Project> projects = company.getProjects();
+        if (!projects.contains(project)) {
+            projects.add(project);
+            company.setProjects(projects);
+            companyRepository.save(company);
+        } else {
+            throw new UnauthorizedActionException("Company already has this project !!");
         }
-        return names;
+    }
+    private void deleteProjectFromCompany(Project project, long companyId){
+        Company company = companyRepository.findById(companyId).orElseThrow(()-> new ResourceNotFoundException("Company doesn't exist !!"));
+        List<Project> projects = company.getProjects();
+        if (projects.contains(project)) {
+            projects.remove(project);
+            company.setProjects(projects);
+            companyRepository.save(company);
+        } else {
+            throw new UnauthorizedActionException("Company already has this project !!");
+        }
     }
 }

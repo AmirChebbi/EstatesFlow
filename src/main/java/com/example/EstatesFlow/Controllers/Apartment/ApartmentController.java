@@ -2,7 +2,6 @@ package com.example.EstatesFlow.Controllers.Apartment;
 
 import com.example.EstatesFlow.DTO.Apartment.ApartmentDTO;
 import com.example.EstatesFlow.Services.Apartment.ApartmentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 public class ApartmentController {
     private final ApartmentService apartmentService;
 
-    @Autowired
     public ApartmentController(ApartmentService apartmentService) {
         this.apartmentService = apartmentService;
     }
@@ -22,17 +20,17 @@ public class ApartmentController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<Object> getAll(int pageNumber){
+    public ResponseEntity<Object> getAll(@RequestParam int pageNumber){
         return apartmentService.getAll(pageNumber);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> addApartment(@RequestBody ApartmentDTO apartment){
-        return apartmentService.addApartment(apartment);
+    public ResponseEntity<Object> addApartment(@RequestBody ApartmentDTO apartment, @RequestParam long projectId){
+        return apartmentService.addApartment(apartment,projectId);
     }
 
     @GetMapping("/getAllForSale")
-    public ResponseEntity<Object> getAllForSale(long projectId, long pageNumber){
+    public ResponseEntity<Object> getAllForSale(@PathVariable long projectId, @RequestParam long pageNumber){
         return apartmentService.getAllApartmentsForSale(projectId, pageNumber);
     }
 
@@ -41,9 +39,9 @@ public class ApartmentController {
         return apartmentService.updateApartment(id ,apartment);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable long id){
-        return apartmentService.deleteById(id);
+    @DeleteMapping("/delete")
+    public ResponseEntity<Object> deleteById(@RequestParam long id, @RequestParam long projectId){
+        return apartmentService.deleteById(id,projectId);
     }
 
 }

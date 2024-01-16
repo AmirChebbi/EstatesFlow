@@ -61,8 +61,8 @@ public class CompanyServiceImpl implements CompanyService{
     }
 
     @Override
-    public ResponseEntity<Object> updateCompany(long id, CompanyDTO companyDTO) {
-        Company company = companyRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Company doesn't exsit !!"));
+    public ResponseEntity<Object> updateCompany(CompanyDTO companyDTO) {
+        Company company = companyRepository.findById(companyDTO.id()).orElseThrow(()-> new ResourceNotFoundException("Company doesn't exsit !!"));
         company.setCoDescription(companyDTO.coDescription());
         company.setCoName(companyDTO.coName());
         company.setImageURL(companyDTO.imageURL());

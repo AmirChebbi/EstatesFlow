@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 public class CompanyController {
     private final CompanyService companyService;
 
-    @Autowired
     public CompanyController(CompanyService companyService) {
         this.companyService = companyService;
     }
@@ -27,13 +26,13 @@ public class CompanyController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> addCompany(@RequestBody CompanyDTO company){
-        return companyService.addCompany(company);
+    public ResponseEntity<Object> addCompany(@RequestBody CompanyDTO companyDTO){
+        return companyService.addCompany(companyDTO);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Object> updateCompany(@PathVariable long id, @RequestBody CompanyDTO company){
-        return companyService.updateCompany(id ,company);
+    public ResponseEntity<Object> updateCompany(@RequestBody CompanyDTO companyDTO){
+        return companyService.updateCompany(companyDTO);
     }
 
     @DeleteMapping("/delete/{id}")

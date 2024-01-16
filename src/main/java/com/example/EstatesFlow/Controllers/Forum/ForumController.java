@@ -16,7 +16,6 @@ import java.util.Vector;
 public class ForumController {
     private final ForumServiceImpl forumService;
 
-    @Autowired
     public ForumController(ForumServiceImpl forumService) {
         this.forumService = forumService;
     }
@@ -28,7 +27,7 @@ public class ForumController {
 
 
     @GetMapping("/getAll")
-    public ResponseEntity<Object> getAll(long pageNumber){
+    public ResponseEntity<Object> getAll(@RequestParam long pageNumber){
         return forumService.getAll(pageNumber);
     }
 

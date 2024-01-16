@@ -16,12 +16,12 @@ import java.util.Vector;
 
 public interface ProjectService {
 
-    public ResponseEntity<Object> getById(@PathVariable long id);
-    public ResponseEntity<Object> getAll(@RequestParam long pageNumber);
+    public ResponseEntity<Object> getById(long id);
+    public ResponseEntity<Object> getAll(long pageNumber);
 
-    public ResponseEntity<Object> addProject(@RequestBody ProjectDTO projectDTO);
-    public ResponseEntity<Object> updateProject(@RequestBody ProjectDTO projectDTO);
-    public ResponseEntity<Object> deleteById(@PathVariable long id) ;
+    public ResponseEntity<Object> addProject(ProjectDTO projectDTO, long companyId);
+    public ResponseEntity<Object> updateProject(ProjectDTO projectDTO);
+    public ResponseEntity<Object> deleteById(long id, long companyId) ;
 
 
 
