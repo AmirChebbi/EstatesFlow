@@ -16,6 +16,7 @@ public class ProjectDTOMapper implements Function<Project, ProjectDTO> {
     @Override
     public ProjectDTO apply(Project project) {
         return new ProjectDTO(
+                project.getId(),
                 project.getProjName(),
                 project.getProjDescription(),
                 project.getAddress(),

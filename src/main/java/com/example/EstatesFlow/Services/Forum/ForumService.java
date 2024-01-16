@@ -12,9 +12,8 @@ public interface ForumService {
 
     public ResponseEntity<Object> submitForum(ForumDTO forumDTO, UserDetails userDetails);
 
+    public ResponseEntity<Object> deleteForum(long id, UserDetails userDetails);
 
-    public ResponseEntity<Object> deleteForum( long id);
-
-    public ResponseEntity<Object> updateForum( Forum forum, long id);
+    public ResponseEntity<Object> updateForum(ForumDTO forumDTO, UserDetails userDetails);
 
 }

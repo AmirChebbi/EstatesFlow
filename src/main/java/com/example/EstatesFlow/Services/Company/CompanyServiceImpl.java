@@ -10,11 +10,11 @@ import com.example.EstatesFlow.Repositories.Company.CompanyRepository;
 import com.example.EstatesFlow.Repositories.Project.ProjectRepository;
 import com.example.EstatesFlow.Utility.ResponseHandler;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
@@ -23,12 +23,9 @@ public class CompanyServiceImpl implements CompanyService{
     private final CompanyRepository companyRepository;
     private final CompanyDTOMapper companyDTOMapper;
 
-    private final ProjectRepository projectRepository;
-
-    public CompanyServiceImpl(CompanyRepository companyRepository, CompanyDTOMapper companyDTOMapper, ProjectRepository projectRepository) {
+    public CompanyServiceImpl(CompanyRepository companyRepository, CompanyDTOMapper companyDTOMapper) {
         this.companyRepository = companyRepository;
         this.companyDTOMapper = companyDTOMapper;
-        this.projectRepository = projectRepository;
     }
 
     @Override
@@ -44,7 +41,7 @@ public class CompanyServiceImpl implements CompanyService{
         if (companies.isEmpty() && pageNumber > 1){
             return getById(1);
         }
-        return ResponseHandler.generateResponse(companies.stream().map(companyDTOMapper).toList(), HttpStatus.OK, companies.size(), companyRepository.getCountPaged(pageable));
+        return ResponseHandler.generateResponse(companies.stream().map(companyDTOMapper).toList(), HttpStatus.OK, companies.size(), companyRepository.getCountPaged());
     }
 
     @Override

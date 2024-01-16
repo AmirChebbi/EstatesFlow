@@ -5,6 +5,9 @@ import com.example.EstatesFlow.DTO.Project.ProjectDTO;
 import com.example.EstatesFlow.Services.Project.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,19 +31,18 @@ public class ProjectController {
 
 
     @GetMapping("/getAll")
-    public ResponseEntity<Object> getAll(long pageNumber){
+    public ResponseEntity<Object> getAll(@RequestParam long pageNumber){
         return projectService.getAll(pageNumber);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> addProject(@RequestBody Project project){
-        return projectService.addProject(project);
+    public ResponseEntity<Object> addProject(@RequestBody ProjectDTO projectDTO){
+        return projectService.addProject(projectDTO);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Object> updateProject(@PathVariable long id, @RequestBody Project project){
-        project.setId(id);
-        return projectService.updateProject(id ,project);
+    public ResponseEntity<Object> updateProject(@RequestBody ProjectDTO projectDTO){
+        return projectService.updateProject(projectDTO);
     }
 
     @DeleteMapping("/delete/{id}")

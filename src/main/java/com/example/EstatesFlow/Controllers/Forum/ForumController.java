@@ -5,6 +5,8 @@ import com.example.EstatesFlow.DTO.Forum.ForumDTO;
 import com.example.EstatesFlow.Services.Forum.ForumServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Vector;
@@ -31,18 +33,18 @@ public class ForumController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> submitForum(@RequestBody Forum forum){
-        return forumService.submitForum(forum);
+    public ResponseEntity<Object> submitForum(@RequestBody ForumDTO forumDTO, @AuthenticationPrincipal UserDetails userDetails){
+        return forumService.submitForum(forumDTO,userDetails);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Object> updateForum(@PathVariable long id, @RequestBody Forum forum){
-        return forumService.updateForum(forum, id);
+    public ResponseEntity<Object> updateForum(@RequestBody ForumDTO forumDTO, @AuthenticationPrincipal UserDetails userDetails){
+        return forumService.updateForum(forumDTO, userDetails);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteForum(@PathVariable long id){
-        forumService.deleteForum(id);
+    public ResponseEntity<Object> deleteForum(@PathVariable long id, @AuthenticationPrincipal UserDetails userDetails){
+        return forumService.deleteForum(id,userDetails);
     }
 
 

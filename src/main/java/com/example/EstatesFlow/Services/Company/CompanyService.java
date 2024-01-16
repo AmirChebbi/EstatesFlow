@@ -15,14 +15,14 @@ import java.util.Vector;
 
 
 public interface CompanyService {
-    public ResponseEntity<Object> getById(@PathVariable long id);
+    public ResponseEntity<Object> getById( long id);
 
     public ResponseEntity<Object> getAll(long pageNumber);
 
-    public ResponseEntity<Object> addCompany(@RequestBody CompanyDTO companyDTO);
+    public ResponseEntity<Object> addCompany(CompanyDTO companyDTO);
 
-    public ResponseEntity<Object> updateCompany(@PathVariable long id, @RequestBody CompanyDTO companyDTO);
-    public ResponseEntity<Object> deleteById(@PathVariable long id);
+    public ResponseEntity<Object> updateCompany(long id, CompanyDTO companyDTO);
+    public ResponseEntity<Object> deleteById(long id);
 
 
 }

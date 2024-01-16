@@ -6,6 +6,7 @@ import com.example.EstatesFlow.DTO.Company.CompanyDTO;
 import com.example.EstatesFlow.DTO.Project.ProjectDTO;
 
 public record ForumDTO (
+        long id,
         String fullName,
         String email,
         String phoneNumber,

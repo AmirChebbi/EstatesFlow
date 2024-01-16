@@ -20,7 +20,7 @@ public interface ProjectService {
     public ResponseEntity<Object> getAll(@RequestParam long pageNumber);
 
     public ResponseEntity<Object> addProject(@RequestBody ProjectDTO projectDTO);
-    public ResponseEntity<Object> updateProject(@PathVariable long id, @RequestBody ProjectDTO projectDTO);
+    public ResponseEntity<Object> updateProject(@RequestBody ProjectDTO projectDTO);
     public ResponseEntity<Object> deleteById(@PathVariable long id) ;
 
 

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.Objects;
 
-@Service
+
 public interface ApartmentService {
 
 
@@ -27,8 +27,5 @@ public interface ApartmentService {
     public ResponseEntity<Object> updateApartment( long id, ApartmentDTO apartmentDTO);
 
     public ResponseEntity<Object> deleteById(long id);
-
-/*
-*/
 
 }

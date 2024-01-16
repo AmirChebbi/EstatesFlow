@@ -8,13 +8,13 @@ import com.example.EstatesFlow.Exceptions.UnauthorizedActionException;
 import com.example.EstatesFlow.Repositories.Apartment.ApartmentRepository;
 import com.example.EstatesFlow.Utility.ResponseHandler;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
-import java.util.Objects;
-
+@Service
 public class ApartmentServiceImpl implements ApartmentService{
 
     private final ApartmentRepository apartmentRepository;
@@ -35,12 +35,12 @@ public class ApartmentServiceImpl implements ApartmentService{
     @Override
     public ResponseEntity<Object> getAllApartmentsForSale(long id, long pageNumber) {
         final Pageable pageable = (Pageable) PageRequest.of((int) pageNumber, 5);
-        List<Apartment> apartments = apartmentRepository.getOneProjectApartmentsForSalePaged(pageable, id, false);
+        List<Apartment> apartments = apartmentRepository.getOneProjectApartmentsForSalePaged(id, false, pageable);
         if(apartments.isEmpty() && pageNumber > 1)
         {
             return getAllApartmentsForSale(id,1);
         }
-        return ResponseHandler.generateResponse(apartments.stream().map(apartmentDTOMapper).toList(),HttpStatus.OK,apartments.size(), apartmentRepository.getOneProjectApartmentsPagedCount(pageable, id, false));
+        return ResponseHandler.generateResponse(apartments.stream().map(apartmentDTOMapper).toList(),HttpStatus.OK,apartments.size(), apartmentRepository.getOneProjectApartmentsPagedCount(id, false));
     }
 
     @Override
@@ -51,12 +51,12 @@ public class ApartmentServiceImpl implements ApartmentService{
         {
             return getAll(1);
         }
-        return ResponseHandler.generateResponse(apartments.stream().map(apartmentDTOMapper).toList(),HttpStatus.OK,apartments.size(), apartmentRepository.getPagedCount(pageable));
+        return ResponseHandler.generateResponse(apartments.stream().map(apartmentDTOMapper).toList(),HttpStatus.OK,apartments.size(), apartmentRepository.getPagedCount());
     }
 
     @Override
     public ResponseEntity<Object> addApartment(ApartmentDTO apartmentDTO) {
-        if (apartmentRepository.findByDTO(apartmentDTO.apartmentNumber(),apartmentDTO.floorNumber(),apartmentDTO.apartmentDescription()).isEmpty()){
+        if (apartmentRepository.findByDTO(apartmentDTO.apartmentDescription(), apartmentDTO.apartmentNumber(),apartmentDTO.floorNumber()).isEmpty()){
             apartmentRepository.save(
                     new Apartment(
                             apartmentDTO.apartmentNumber(),
@@ -94,13 +94,13 @@ public class ApartmentServiceImpl implements ApartmentService{
         }
     }
 
-    public static List<Apartment> filterSoldApartments(List<Apartment> apartments){
+    /*public static List<Apartment> filterSoldApartments(List<Apartment> apartments){
         for (Apartment apartment : apartments){
             if (Objects.equals( apartment.isSold(),true)){
                 apartments.remove(apartment);
             }
         }
         return apartments;
-    }
+    }*/
 
 }

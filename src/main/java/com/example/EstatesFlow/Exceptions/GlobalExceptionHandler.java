@@ -25,10 +25,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@ControllerAdvice
-@Order(Ordered.HIGHEST_PRECEDENCE)
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-
+/*@ControllerAdvice
+@Order(Ordered.HIGHEST_PRECEDENCE)*/
+public class GlobalExceptionHandler /*extends ResponseEntityExceptionHandler */{
+/*
     @ExceptionHandler(ExpiredTokenException.class)
     protected ResponseEntity<Object> handleExpiredJwtException(@NotNull ExpiredTokenException ex, WebRequest request){
         List<String> details = new ArrayList<>();
@@ -213,5 +213,5 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .errors(details)
                 .build();
         return ResponseEntityBuilder.build(apiError);
-    }
+    }*/
 }

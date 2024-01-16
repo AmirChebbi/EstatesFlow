@@ -22,6 +22,7 @@ public class ForumDTOMapper implements Function<Forum, ForumDTO> {
     @Override
     public ForumDTO apply(Forum forum) {
         return new ForumDTO(
+                forum.getId(),
                 forum.getUser().getFirstName() +" "+ forum.getUser().getLastName(),
                 forum.getUser().getEmail(),
                 forum.getUser().getPhoneNumber(),

@@ -17,12 +17,12 @@ public class CompanyController {
     }
 
     @GetMapping("/getById/{id}")
-    public ResponseEntity<Object> getById(@PathVariable Long id){
+    public ResponseEntity<Object> getById(@PathVariable long id){
         return companyService.getById(id);
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<Object> getAll(long pageNumber){
+    public ResponseEntity<Object> getAll(@RequestParam long pageNumber){
         return companyService.getAll(pageNumber);
     }
 

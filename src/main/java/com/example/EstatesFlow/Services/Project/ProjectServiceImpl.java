@@ -8,11 +8,11 @@ import com.example.EstatesFlow.Exceptions.UnauthorizedActionException;
 import com.example.EstatesFlow.Repositories.Project.ProjectRepository;
 import com.example.EstatesFlow.Utility.ResponseHandler;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class ProjectServiceImpl implements ProjectService{
         if (projects.isEmpty() && pageNumber>1){
             return getAll(1);
         }
-        return ResponseHandler.generateResponse(projects.stream().map(projectDTOMapper).toList(),HttpStatus.OK,projects.size(), projectRepository.getPagedCount(pageable));
+        return ResponseHandler.generateResponse(projects.stream().map(projectDTOMapper).toList(),HttpStatus.OK,projects.size(), projectRepository.getPagedCount());
     }
 
 
@@ -61,8 +61,8 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public ResponseEntity<Object> updateProject(long id, ProjectDTO projectDTO) {
-        Project project = projectRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Project doesn't exists !!"));
+    public ResponseEntity<Object> updateProject(ProjectDTO projectDTO) {
+        Project project = projectRepository.findById(projectDTO.id()).orElseThrow(() -> new ResourceNotFoundException("Project doesn't exists !!"));
         project.setProjName(projectDTO.projName());
         project.setProjDescription(project.getProjDescription());
         project.setAddress(projectDTO.address());
