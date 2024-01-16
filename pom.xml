@@ -14,7 +14,7 @@
 	<name>EstatesFlow</name>
 	<description>A real estate Backend Server</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -33,7 +33,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
-			<version>3.1.2</version>
+			<version>3.0.9</version>
 		</dependency>
 		<dependency>
 			<groupId>com.mysql</groupId>

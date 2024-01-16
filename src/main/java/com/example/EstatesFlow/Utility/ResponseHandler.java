@@ -1,7 +1,6 @@
 package com.example.EstatesFlow.Utility;
 
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -21,18 +20,6 @@ public class ResponseHandler {
         map.put("data" , responseObj);
         return new ResponseEntity<>(map , status);
     }
-
-
-    public static ResponseEntity<Object> generateResponse(Object responseObj , HttpHeaders headers, HttpStatus status)
-    {
-        Map<String , Object> map = new HashMap<>();
-        map.put("status" , status.value());
-        map.put("message" , "success");
-        map.put("timestamp" , LocalDateTime.now());
-        map.put("data" , responseObj);
-        return new ResponseEntity<>(map , headers , status);
-    }
-
 
     public static ResponseEntity<Object> generateResponse(Object responseObj ,HttpStatus status ,  long currentLength , long total )
     {

@@ -84,7 +84,7 @@ public class AuthServiceImpl  implements  AuthService{
 
         String confirmationToken = confirmationTokenService.generateConfirmationToken(savedUser);
         String refreshToken = refreshTokenService.generateRefreshToken(savedUser);
-        String link = "http://localhost:8080/api/v1/auth/confirm?token=" + confirmationToken;
+        String link = "http://localhost:8081/api/v1/auth/confirm?token=" + confirmationToken;
         emailSenderService.sendEmail(savedUser.getEmail(),"Confirmation email" , emailSenderService.emailTemplateConfirmation(savedUser.getFirstName(),link));
 
         final RegisterResponseDTO registerResponse = RegisterResponseDTO

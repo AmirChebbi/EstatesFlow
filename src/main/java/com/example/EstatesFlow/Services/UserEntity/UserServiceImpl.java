@@ -78,7 +78,6 @@ public class UserServiceImpl implements UserService{
         userEntity.setEnabled(true);
         userRepository.save(userEntity);
     }
-
     @Override
     public boolean isEmailRegistered(final String email)
     {
@@ -106,7 +105,6 @@ public class UserServiceImpl implements UserService{
         return userRepository.fetchUserWithId(userId)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("The user with ID : %s could not be found.", userId)));
     }
-
     @Override
     public UserEntity getUserEntityByEmail(@NotNull final String userEmail)
     {

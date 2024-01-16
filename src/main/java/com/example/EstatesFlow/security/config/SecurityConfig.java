@@ -44,7 +44,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 //frontend not ready so, everything is permitted.
-
+                .csrf().and().cors().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(authEntryPoint)
                 .and()
@@ -54,7 +54,6 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/project/**").permitAll()
                 .requestMatchers("/api/v1/company/**").permitAll()
                 .requestMatchers("/api/v1/forum/**").permitAll()
-
 
                 .anyRequest().authenticated()
                 .and()
