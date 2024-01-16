@@ -19,10 +19,13 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(nullable = false)
     private String projName;
+
 
     private String projDescription;
 
+    @Column(nullable = false)
     private String address;
 
     private String projImageURL;

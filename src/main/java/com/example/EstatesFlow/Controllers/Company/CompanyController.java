@@ -1,13 +1,10 @@
 package com.example.EstatesFlow.Controllers.Company;
 
-import com.example.EstatesFlow.Entities.Company.Company;
 import com.example.EstatesFlow.DTO.Company.CompanyDTO;
 import com.example.EstatesFlow.Services.Company.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Vector;
 
 @RestController
 @RequestMapping("/api/v1/company")
@@ -25,18 +22,17 @@ public class CompanyController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<Object> getAll(){
-        return companyService.getAll();
+    public ResponseEntity<Object> getAll(long pageNumber){
+        return companyService.getAll(pageNumber);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> addCompany(@RequestBody Company company){
+    public ResponseEntity<Object> addCompany(@RequestBody CompanyDTO company){
         return companyService.addCompany(company);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Object> updateCompany(@PathVariable long id, @RequestBody Company company){
-        company.setId(id);
+    public ResponseEntity<Object> updateCompany(@PathVariable long id, @RequestBody CompanyDTO company){
         return companyService.updateCompany(id ,company);
     }
 

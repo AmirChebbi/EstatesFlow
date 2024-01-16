@@ -32,4 +32,12 @@ public class Forum {
     private Apartment wantedApartment;
 
     private float price;
+
+    public Forum(UserEntity user, Company relatedCompany, Project relatedProject, Apartment wantedApartment, float price) {
+        this.user = user;
+        this.relatedCompany = relatedCompany;
+        this.relatedProject = relatedProject;
+        this.wantedApartment = wantedApartment;
+        this.price = price;
+    }
 }
