@@ -2,7 +2,6 @@ package com.example.EstatesFlow.Controllers.Company;
 
 import com.example.EstatesFlow.DTO.Company.CompanyDTO;
 import com.example.EstatesFlow.Services.Company.CompanyService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +29,7 @@ public class CompanyController {
         return companyService.addCompany(companyDTO);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/update")
     public ResponseEntity<Object> updateCompany(@RequestBody CompanyDTO companyDTO){
         return companyService.updateCompany(companyDTO);
     }

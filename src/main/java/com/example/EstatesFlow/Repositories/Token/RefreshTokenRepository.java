@@ -3,7 +3,6 @@ package com.example.EstatesFlow.Repositories.Token;
 
 import com.example.EstatesFlow.Entities.token.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -24,8 +23,4 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Inte
     @Query(value = "SELECT RT FROM RefreshToken RT WHERE RT.userEntity.id = :userId")
     List<RefreshToken> fetchAllRefreshTokenByUserId(@Param("userId")final UUID userId);
 
-    @Transactional
-    @Modifying
-    @Query(value = "DELETE FROM RefreshToken RT WHERE RT.id = :refreshTokenId")
-    void deleteRefreshTokenById(@Param("refreshTokenId")final long id);
 }

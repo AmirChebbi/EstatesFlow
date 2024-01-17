@@ -38,7 +38,7 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public ResponseEntity<Object> getAll(long pageNumber) {
-        final Pageable pageable = (Pageable) PageRequest.of((int) pageNumber, 5);
+        final Pageable pageable = (Pageable) PageRequest.of((int) pageNumber -1, 5);
         List<Project> projects = projectRepository.getAllPaged(pageable);
         if (projects.isEmpty() && pageNumber>1){
             return getAll(1);

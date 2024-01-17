@@ -59,7 +59,7 @@ public class ForumServiceImpl implements ForumService{
     }
 
     public ResponseEntity<Object> getAll(long pageNumber){
-        final Pageable pageable = (Pageable) PageRequest.of((int) pageNumber, 10);
+        final Pageable pageable = (Pageable) PageRequest.of((int) pageNumber -1, 10);
         List<Forum> forums= forumRepository.findAllPaged(pageable);
         if (forums.isEmpty() && pageNumber >1 ){
             return getAll(1);

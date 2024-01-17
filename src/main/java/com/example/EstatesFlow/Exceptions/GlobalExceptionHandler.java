@@ -1,6 +1,6 @@
 package com.example.EstatesFlow.Exceptions;
 
-import org.jetbrains.annotations.NotNull;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -25,10 +25,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/*@ControllerAdvice
-@Order(Ordered.HIGHEST_PRECEDENCE)*/
-public class GlobalExceptionHandler /*extends ResponseEntityExceptionHandler */{
-/*
+@ControllerAdvice
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
     @ExceptionHandler(ExpiredTokenException.class)
     protected ResponseEntity<Object> handleExpiredJwtException(@NotNull ExpiredTokenException ex, WebRequest request){
         List<String> details = new ArrayList<>();
@@ -123,6 +123,7 @@ public class GlobalExceptionHandler /*extends ResponseEntityExceptionHandler */{
                 .build();
         return ResponseEntityBuilder.build(apiError);
     }
+
     @ExceptionHandler(DisabledException.class)
     protected ResponseEntity<Object> handleDisabledException(@NotNull DisabledException ex){
         List<String> details = new ArrayList<>();
@@ -213,5 +214,5 @@ public class GlobalExceptionHandler /*extends ResponseEntityExceptionHandler */{
                 .errors(details)
                 .build();
         return ResponseEntityBuilder.build(apiError);
-    }*/
+    }
 }

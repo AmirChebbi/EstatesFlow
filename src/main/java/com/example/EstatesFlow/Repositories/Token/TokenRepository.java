@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 @Repository
 @Transactional(readOnly = true)
 public interface TokenRepository extends JpaRepository<Token, Integer> {
@@ -20,6 +21,4 @@ public interface TokenRepository extends JpaRepository<Token, Integer> {
     @Query(value = "select t from Token t where t.token = :token")
     Optional<Token> findByToken(@Param("token") String token);
 
-    @Query(value = "SELECT CASE WHEN COUNT(t) > 0 THEN TRUE ELSE FALSE END FROM Token t WHERE t.token = :token AND t.expired = false AND t.revoked = false")
-    boolean isTokenValidAndExist(@Param("token") final String token);
 }

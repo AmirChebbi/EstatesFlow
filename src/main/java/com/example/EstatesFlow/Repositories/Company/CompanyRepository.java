@@ -16,7 +16,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
     @Query(value = "select c from Company c")
     List<Company> getAllPaged(Pageable pageable);
 
-    @Query(value = "select coutn(c) from Company c")
+    @Query(value = "select count(c) from Company c")
     Long getCountPaged();
 
     @Query("SELECT c FROM Company c WHERE c.coName = :coName AND c.coDescription = :coDescription")

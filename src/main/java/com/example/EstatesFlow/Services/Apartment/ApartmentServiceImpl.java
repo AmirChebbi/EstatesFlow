@@ -37,7 +37,7 @@ public class ApartmentServiceImpl implements ApartmentService{
 
     @Override
     public ResponseEntity<Object> getAllApartmentsForSale(long id, long pageNumber) {
-        final Pageable pageable = (Pageable) PageRequest.of((int) pageNumber, 5);
+        final Pageable pageable = (Pageable) PageRequest.of((int) pageNumber -1, 5);
         List<Apartment> apartments = apartmentRepository.getOneProjectApartmentsForSalePaged(id, false, pageable);
         if(apartments.isEmpty() && pageNumber > 1)
         {
@@ -48,7 +48,7 @@ public class ApartmentServiceImpl implements ApartmentService{
 
     @Override
     public ResponseEntity<Object> getAll(long pageNumber) {
-        final Pageable pageable = (Pageable) PageRequest.of((int) pageNumber, 5);
+        final Pageable pageable = (Pageable) PageRequest.of((int) pageNumber -1, 5);
         List<Apartment> apartments = apartmentRepository.getAllPaged(pageable);
         if(apartments.isEmpty() && pageNumber > 1)
         {
@@ -76,8 +76,8 @@ public class ApartmentServiceImpl implements ApartmentService{
     }
 
     @Override
-    public ResponseEntity<Object> updateApartment(long id,ApartmentDTO apartmentDTO) {
-        Apartment apartment = apartmentRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("This Apartment doesn't exist !!"));
+    public ResponseEntity<Object> updateApartment(ApartmentDTO apartmentDTO) {
+        Apartment apartment = apartmentRepository.findById(apartmentDTO.id()).orElseThrow(()-> new ResourceNotFoundException("This Apartment doesn't exist !!"));
         apartment.setSold(apartmentDTO.sold());
         apartment.setApartmentNumber(apartmentDTO.apartmentNumber());
         apartment.setApartmentDescription(apartmentDTO.apartmentDescription());

@@ -39,20 +39,19 @@ public class SecurityConfig {
         this.authEntryPoint = authEntryPoint;
     }
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                //frontend not ready so, everything is permitted.
-                .csrf().and().cors().disable()
+                .cors().and()
+                .csrf().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(authEntryPoint)
                 .and()
                 .authorizeRequests()
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/api/v1/apartment/**").permitAll()
-                .requestMatchers("/api/v1/project/**").permitAll()
                 .requestMatchers("/api/v1/company/**").permitAll()
+                .requestMatchers("/api/v1/project/**").permitAll()
                 .requestMatchers("/api/v1/forum/**").permitAll()
 
                 .anyRequest().authenticated()
@@ -73,6 +72,9 @@ public class SecurityConfig {
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
+
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

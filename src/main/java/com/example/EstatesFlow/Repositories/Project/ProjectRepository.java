@@ -19,6 +19,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query(value = "select count (p) from Project p")
     Long getPagedCount();
 
-    @Query(value = "select p from Project p where p.projName =: name and p.address =: adress and p.projDescription =: description")
-    Optional<Project> findByDTO(@Param("name") String name,  @Param("address") String address, @Param("description") String description);
+    @Query(value = "select p from Project p where p.projName =: projName and p.address =: adress and p.projDescription =: description")
+    Optional<Project> findByDTO(@Param("projName") String projName,  @Param("address") String address, @Param("projDescription") String projDescription);
 }

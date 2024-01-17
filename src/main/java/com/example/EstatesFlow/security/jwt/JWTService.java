@@ -11,12 +11,13 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
 
-
+@Service
 @Component
 public class JWTService {
 

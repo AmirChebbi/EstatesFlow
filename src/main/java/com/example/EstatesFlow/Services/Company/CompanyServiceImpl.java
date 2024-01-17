@@ -3,11 +3,9 @@ package com.example.EstatesFlow.Services.Company;
 import com.example.EstatesFlow.DTO.Company.CompanyDTO;
 import com.example.EstatesFlow.DTO.Company.CompanyDTOMapper;
 import com.example.EstatesFlow.Entities.Company.Company;
-import com.example.EstatesFlow.Entities.Project.Project;
 import com.example.EstatesFlow.Exceptions.ResourceNotFoundException;
 import com.example.EstatesFlow.Exceptions.UnauthorizedActionException;
 import com.example.EstatesFlow.Repositories.Company.CompanyRepository;
-import com.example.EstatesFlow.Repositories.Project.ProjectRepository;
 import com.example.EstatesFlow.Utility.ResponseHandler;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +34,7 @@ public class CompanyServiceImpl implements CompanyService{
 
     @Override
     public ResponseEntity<Object>getAll(long pageNumber) {
-        Pageable pageable = (Pageable) PageRequest.of((int) pageNumber,4);
+        Pageable pageable = (Pageable) PageRequest.of((int) pageNumber -1,3);
         List<Company> companies = companyRepository.getAllPaged(pageable);
         if (companies.isEmpty() && pageNumber > 1){
             return getById(1);

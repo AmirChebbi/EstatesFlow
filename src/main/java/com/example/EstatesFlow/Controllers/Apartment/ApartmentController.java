@@ -30,13 +30,13 @@ public class ApartmentController {
     }
 
     @GetMapping("/getAllForSale")
-    public ResponseEntity<Object> getAllForSale(@PathVariable long projectId, @RequestParam long pageNumber){
+    public ResponseEntity<Object> getAllForSale(@RequestParam long projectId, @RequestParam long pageNumber){
         return apartmentService.getAllApartmentsForSale(projectId, pageNumber);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Object> updateApartment(@PathVariable long id, @RequestBody ApartmentDTO apartment){
-        return apartmentService.updateApartment(id ,apartment);
+    @PutMapping("/update")
+    public ResponseEntity<Object> updateApartment( @RequestBody ApartmentDTO apartment){
+        return apartmentService.updateApartment(apartment);
     }
 
     @DeleteMapping("/delete")
