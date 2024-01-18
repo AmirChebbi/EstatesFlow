@@ -21,15 +21,9 @@ import java.util.UUID;
 @Entity
 @Table
 public class UserEntity implements UserDetails {
-    @SequenceGenerator(
-            name = "user_seq",
-            sequenceName = "user_seq"
-    )
+
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "user_seq"
-    )
+    @GeneratedValue
     private UUID id;
 
     @Column(nullable = false)
@@ -68,21 +62,21 @@ public class UserEntity implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return this.isEnabled;
     }
 }

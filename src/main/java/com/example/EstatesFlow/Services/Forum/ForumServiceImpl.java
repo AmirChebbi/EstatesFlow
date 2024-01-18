@@ -69,15 +69,16 @@ public class ForumServiceImpl implements ForumService{
     }
 
     public ResponseEntity<Object> submitForum(ForumDTO forumDTO, UserDetails userDetails) {
+
         UserEntity user = userRepository.findByEmail(forumDTO.email()).orElseThrow(() -> new ResourceNotFoundException("We have trouble saving your forum !!"));
-        if (Objects.equals(userDetails, user)) {
+        if (Objects.equals(userDetails.getUsername(), user.getEmail())) {
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
             simpleMailMessage.setTo(forumDTO.email());
             simpleMailMessage.setSubject("Conformation de l'envoi de votre formulaire");
-            simpleMailMessage.setText("");
+            simpleMailMessage.setText("just testing");
 
             SimpleMailMessage simpleMailMessageAdmin = new SimpleMailMessage();
-            simpleMailMessageAdmin.setTo("");
+            simpleMailMessageAdmin.setTo("amirchebbi60@gmail.com");
             simpleMailMessageAdmin.setSubject("You have a new potential client");
             simpleMailMessageAdmin.setText("Bro you have a new potential Client named : " + forumDTO.fullName() + ", their email is : " + forumDTO.email() + ", You better contact them, if you wanna make money of course." +
                     "all the other related info is in the forum");
@@ -102,7 +103,7 @@ public class ForumServiceImpl implements ForumService{
 
     public ResponseEntity<Object> deleteForum(long id, UserDetails userDetails){
         Forum forum = forumRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Forum doesn't exist !!"));
-        if(Objects.equals(userDetails, forum.getUser())){
+        if(Objects.equals(userDetails.getUsername(), forum.getUser().getEmail())){
             forumRepository.deleteById(id);
             String successMessage = String.format("Forum Deleted Successfully");
             return ResponseHandler.generateResponse(successMessage, HttpStatus.OK);
@@ -148,7 +149,7 @@ public class ForumServiceImpl implements ForumService{
         Apartment apartment = findApartmentByDTO(forumDTO.relatedApartment());
         Project project = findProjectByDTO(forumDTO.relatedProject());
         Company company = findCompanyByDTO(forumDTO.relatedCompany());
-        if (!company.getProjects().contains(project) || !project.getApartments().contains(apartment) || !Objects.equals(user, userDetails)){
+        if (!company.getProjects().contains(project) || !project.getApartments().contains(apartment) || !Objects.equals(user.getEmail(), userDetails.getUsername())){
             return false;
         } else {
             return true;
